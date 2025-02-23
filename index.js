@@ -7,6 +7,8 @@ const { spawn } = require('child_process');
 
 var bodyParser = require('body-parser');
 
+var currentAngle = 0;
+
 const pyProcess = spawn('python3', ['MotorControl/main.py'])
 
 
@@ -35,6 +37,8 @@ app.post('/control', (req, res) => {
     const { direction } = req.body;
     console.log("hit")
     console.log(direction);
+
+    currentAngle += direction;
     
     if (typeof direction === 'undefined') {
         return res.status(400).send('Missing angle parameter');
@@ -43,7 +47,7 @@ app.post('/control', (req, res) => {
     console.log(typeof direction);
 
     console.log( { angle: direction } );
-    pyProcess.stdin.write(JSON.stringify(direction));
+    pyProcess.stdin.write(JSON.stringify(currentAngle));
     pyProcess.stdin.end();
 })
 
