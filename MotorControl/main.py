@@ -35,8 +35,8 @@ def process_command(data):
     try:
         # Assuming the data is a JSON object containing an 'angle'
         # Process the angle here (e.g., control your servo)
-        changeAngle(data, 0)
-        changeAngle(data, 1)
+        changeAngle(data.get("yaw"), 0)
+        changeAngle(data.get("pitch"), 1)
         result = f"Servo moved to angle: {data}"
     except Exception as e:
         result = f"Error: {str(e)}"

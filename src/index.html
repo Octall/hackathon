@@ -100,13 +100,13 @@
     ></script>
     <script>
       // Function to send a POST request to the server with the given angle
-      function sendServoCommand(direction) {
+      function sendServoCommand(angle, direction) {
         fetch("/control", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ direction: direction })
+          body: JSON.stringify({ angle: angle, direction: direction })
         })
           .then(response => response.text())
           .then(data => {
@@ -119,16 +119,16 @@
       // Attach event listeners to the arrow buttons
       // Adjust angle values based on your servo configuration
       document.getElementById("up").addEventListener("click", () => {
-        sendServoCommand(45);
+        sendServoCommand(10, "up");
       });
       document.getElementById("down").addEventListener("click", () => {
-        sendServoCommand(45);
+        sendServoCommand(10, "down");
       });
       document.getElementById("left").addEventListener("click", () => {
-        sendServoCommand(135);
+        sendServoCommand(10, "left");
       });
       document.getElementById("right").addEventListener("click", () => {
-        sendServoCommand(0);
+        sendServoCommand(10, "right");
       });
 
       // Additional actions for other buttons can be added here
