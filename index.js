@@ -5,6 +5,8 @@ const path = require('path');
 const http = require('http').createServer(app);
 const { spawn } = require('child_process');
 
+var bodyParser = require('body-parser');
+
 const pyProcess = spawn('python3', ['MotorControl/main.py'])
 
 
@@ -27,15 +29,21 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + "/src/index.html");
 });
 
-app.post('/control', express.json(), (req, res) => {
-    const { angle } = req.body;
+app.use(bodyParser.json());
 
-    if(typeof(angle) == undefined) {
-        console.error('Error executing python script: ${error}');
-        return res.status(500).send('Error controlling servo motor.');
+app.post('/control', (req, res) => {
+    const { direction } = req.body;
+    console.log("hit")
+    console.log(direction);
+    
+    if (typeof direction === 'undefined') {
+        return res.status(400).send('Missing angle parameter');
     }
-    console.log(angle);
-    pyProcess.stdin.write(JSON.stringify(angle));
+
+    console.log(typeof direction);
+
+    console.log( { angle: direction } );
+    pyProcess.stdin.write(JSON.stringify(direction));
     pyProcess.stdin.end();
 })
 
