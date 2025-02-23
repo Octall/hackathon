@@ -47,8 +47,7 @@ app.post('/control', (req, res) => {
     console.log(typeof direction);
 
     console.log( { angle: direction } );
-    pyProcess.stdin.write(JSON.stringify(currentAngle));
-    pyProcess.stdin.end();
+    pyProcess.stdin.write(JSON.stringify(currentAngle) + "\n");
 })
 
 app.use('/src', express.static(path.join(__dirname, 'src')));
