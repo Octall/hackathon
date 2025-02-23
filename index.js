@@ -33,7 +33,8 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json());
 
 app.post('/control', (req, res) => {
-    const pyProcess = spawn('python3', ['MotorControl/main.py'])
+    const pyProcess = spawn('python3', ['MotorControl/main.py']);
+    
     const { direction } = req.body;
     console.log("hit")
     console.log(direction);
