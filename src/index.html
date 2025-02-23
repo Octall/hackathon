@@ -104,12 +104,12 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ direction: direction })
+          body: JSON.stringify({ angle: direction })
         })
           .then(response => response.text())
           .then(data => {
             console.log(data);
-            document.getElementById("outputArea").value += data + "\n";
+            document.getElementById("output").value += data + "\n";
           })
           .catch(error => console.error("Error:", error));
       }

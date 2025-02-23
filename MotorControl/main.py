@@ -34,9 +34,9 @@ def changeAngle(angle, servo):
 def main():
 
     input_data = sys.stdin.read()
+    print(input_data)
     try:
         data = json.loads(input_data)
-        
 
         result = f"Servo moved to angle: {data}"
         changeAngle(data, 0)
