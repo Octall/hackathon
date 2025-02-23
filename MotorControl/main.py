@@ -31,24 +31,35 @@ def changeAngle(angle, servo):
     pwm[servo].ChangeDutyCycle(0)  # stop sending signals to hold the position
 
 
-def main():
-
-    input_data = sys.stdin.read()
-    print(input_data)
+def process_command(data):
     try:
-        data = json.loads(input_data)
-
-        result = f"Servo moved to angle: {data}"
-        changeAngle(data, 0)
-        changeAngle(data, 1)
+        # Assuming the data is a JSON object containing an 'angle'
+        angle = data.get('angle', 0)
+        # Process the angle here (e.g., control your servo)
+        changeAngle(result)
+        result = f"Servo moved to angle: {angle}"
     except Exception as e:
         result = f"Error: {str(e)}"
+    return result
 
-    print(result)
+def main():
+    while True:
+        # Read one line at a time from stdin
+        line = sys.stdin.readline()
+        if not line:
+            # If readline returns an empty string, no more data is coming.
+            continue
+        try:
+            data = json.loads(line)
+        except json.JSONDecodeError as e:
+            print(f"Invalid JSON: {str(e)}")
+            sys.stdout.flush()
+            continue
+        
+        # Process the command
+        result = process_command(data)
+        print(result)
+        sys.stdout.flush()
 
-    sys.stdout.flush()
-
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
