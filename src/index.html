@@ -106,7 +106,7 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ angle: direction })
+          body: JSON.stringify({ direction: direction })
         })
           .then(response => response.text())
           .then(data => {
