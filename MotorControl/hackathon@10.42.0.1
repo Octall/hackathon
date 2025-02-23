@@ -1,0 +1,24 @@
+import importlib.util
+try:
+    importlib.util.find_spec('RPi.GPIO')
+    import RPi.GPIO as GPIO
+    print("Real GPIO")
+except (ImportError, RuntimeError):
+    import FakeRPi.GPIO as GPIO
+
+servo_1 = 11
+
+GPIO.setmode(GPIO.BOARD)
+
+print("success?")
+
+GPIO.setup(servo_1, GPIO.OUT)
+
+pwm = GPIO.PWM(servo_1, 50)
+pwm.start(0);
+
+pwm.ChangeDutyCycle(60)
+
+while(True):
+    print("yay")
+    
